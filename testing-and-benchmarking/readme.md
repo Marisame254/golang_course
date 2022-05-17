@@ -1,17 +1,19 @@
 # Remember to BET
+
 - Benchmark
 - Example
 - Test
 
-```
+``` text
+
 BenchmarkCat(b *testing.B)
 ExampleCat()
 TestCat(t *testing.T)
 ```
 
-# Commands
+## Commands
 
-```
+```bash
 godoc -http=:8080
 
 go test
