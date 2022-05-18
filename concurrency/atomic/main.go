@@ -2,31 +2,35 @@ package main
 
 import (
 	"fmt"
-	"runtime"
+	"math/rand"
 	"sync"
 	"sync/atomic"
+	"time"
 )
 
+var wg sync.WaitGroup
+var counter int64 // type use for atomicity
+
 func main() {
-	fmt.Println("CPUs:", runtime.NumCPU())
-	fmt.Println("Goroutines:", runtime.NumGoroutine())
-
-	var counter int64
-
-	const gs = 100
-	var wg sync.WaitGroup
-	wg.Add(gs)
-
-	for i := 0; i < gs; i++ {
-		go func() {
-			atomic.AddInt64(&counter, 1)
-			runtime.Gosched()
-			fmt.Println("Counter\t", atomic.LoadInt64(&counter))
-			wg.Done()
-		}()
-		fmt.Println("Goroutines:", runtime.NumGoroutine())
-	}
+	wg.Add(2)
+	go incrementor("Foo:")
+	go incrementor("Bar:")
 	wg.Wait()
-	fmt.Println("Goroutines:", runtime.NumGoroutine())
-	fmt.Println("count:", counter)
+	fmt.Println("Final Counter:", counter)
 }
+
+func incrementor(s string) {
+	for i := 0; i < 20; i++ {
+		time.Sleep(time.Duration(rand.Intn(20)) * time.Millisecond)
+		// race
+		// counter++
+		// no race
+		atomic.AddInt64(&counter, 1)
+		fmt.Println(s, i, "Counter:", counter)
+	}
+	wg.Done()
+}
+
+// go run -race main.go
+// vs
+// go run main.go
