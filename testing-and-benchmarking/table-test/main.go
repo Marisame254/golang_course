@@ -13,5 +13,5 @@ func mySum(xi ...int) int {
 	for _, v := range xi {
 		sum += v
 	}
-	return sum + 1
+	return sum
 }

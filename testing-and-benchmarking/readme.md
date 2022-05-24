@@ -5,7 +5,6 @@
 - Test
 
 ``` text
-
 BenchmarkCat(b *testing.B)
 ExampleCat()
 TestCat(t *testing.T)

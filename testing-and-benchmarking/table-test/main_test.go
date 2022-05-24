@@ -10,10 +10,10 @@ func TestMySum(t *testing.T) {
 	}
 
 	tests := []test{
-		test{[]int{21, 21}, 42},
-		test{[]int{3, 4, 5}, 12},
-		test{[]int{1, 2}, 3},
-		test{[]int{-1, 0, 1}, 0},
+		{[]int{21, 21}, 42},
+		{[]int{3, 4, 5}, 12},
+		{[]int{1, 2}, 3},
+		{[]int{-1, 0, 1}, 0},
 	}
 
 	for _, v := range tests {
